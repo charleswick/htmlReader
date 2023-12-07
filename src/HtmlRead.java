@@ -9,12 +9,13 @@ public class HtmlRead {
     }
 
     public HtmlRead() {
+        // lucas helped me with this part since it wasn't working
         int endSpot=0;
         int indexSpot=0;
+        int beginIndex =0;
 
         try {
-            System.out.println();
-            System.out.print("hello \n");
+
             URL url = new URL("https://www.milton.edu/");
             BufferedReader reader = new BufferedReader(
                     new InputStreamReader(url.openStream())
@@ -22,44 +23,78 @@ public class HtmlRead {
             String line;
             while ( (line = reader.readLine()) != null ) {
                 if(line.contains("href=")){
-                     indexSpot = line.indexOf("href=");
+                    System.out.println("og"+line);
 
-                    if(line.substring(indexSpot+6).contains("\"")&&line.substring(indexSpot+6).contains("www")){
-                        int endQuoteSpot =line.indexOf("\"",indexSpot+6);
-                        endSpot = endQuoteSpot;
-                      //  System.out.println(line.substring(indexSpot+6,endQuoteSpot));
-
+                    if (line.contains("https")){
+                        beginIndex = line.indexOf("https");
                     }
-                    if(line.substring(indexSpot+6).contains("\'")&&line.substring(indexSpot+6).contains("www")){
-                        int singleQuoteSpot =line.indexOf("\'",indexSpot+6);
-                        endSpot = singleQuoteSpot;
-                     //   System.out.println(line.substring(indexSpot+6,singleQuoteSpot));
-
-
+                    else if (line.contains("www")){
+                        beginIndex = line.indexOf("www");
+                    } else{
+                        beginIndex=line.indexOf("href=")+6;
                     }
-                    if(line.substring(indexSpot+6).contains("\'")&&line.substring(indexSpot+6).contains("www")&&(line.substring(indexSpot+6).contains("\""))){
-                        int singleQuoteSpot =line.indexOf("\'",indexSpot+6);
-                        int endQuoteSpot =line.indexOf("\"",indexSpot+6);
-                        if(singleQuoteSpot>endQuoteSpot){
-                           endSpot = endQuoteSpot;
 
+
+
+                    if (line.substring(beginIndex).contains("\'")){
+                        endSpot = line.indexOf("\'", beginIndex+1);
+                    }
+                    if (line.substring(beginIndex).contains("\"")){
+                        endSpot = line.indexOf("\"", beginIndex+1);
+                    }
+                    if (line.substring(beginIndex).contains("\"") && line.substring(beginIndex).contains("\'")){
+                        if (line.indexOf("\'") > line.indexOf("\"")){
+                            endSpot = line.indexOf("\"", beginIndex+1);
+                        }else{
+                            endSpot = line.indexOf("\'", beginIndex+1);
                         }
-                        else{
-                         //   System.out.println(line.substring(indexSpot+6,singleQuoteSpot));
-                             endSpot = singleQuoteSpot;
-
-                        }
-
-
-
                     }
+                    System.out.println(line.substring(beginIndex,endSpot));
+
+//                     indexSpot = line.indexOf("href=");
+//                     if(line.contains("\"")&&line.contains("www")){
+//                        int endQuoteSpot =line.indexOf("\"",indexSpot+6);
+//                        endSpot = endQuoteSpot;
+//                         System.out.println(line.substring(indexSpot+6,endSpot));
+//
+//
+//                      // System.out.println(line.substring(indexSpot+6,endQuoteSpot));
+//
+//                    }
+//                    if(line.substring(indexSpot+6).contains("\'")){
+//                        int singleQuoteSpot =line.indexOf("\'",indexSpot+6);
+//                        endSpot = singleQuoteSpot;
+//
+//
+//                        //   System.out.println(line.substring(indexSpot+6,singleQuoteSpot));
+//
+//
+//                    }
+//                    if(line.substring(indexSpot+6).contains("\'")&&(line.substring(indexSpot+6).contains("\""))){
+//                        int singleQuoteSpot =line.indexOf("\'",indexSpot+6);
+//                        int endQuoteSpot =line.indexOf("\"",indexSpot+6);
+//
+//                        if(singleQuoteSpot>endQuoteSpot){
+//                           endSpot = endQuoteSpot;
+//
+//                        }
+//                        else{
+//                         //   System.out.println(line.substring(indexSpot+6,singleQuoteSpot));
+//                             endSpot = singleQuoteSpot;
+//
+//                        }
+//
+
+
+                    //}
+
 
 
 
 
 
                 }
-                System.out.println(line.substring(indexSpot+6,endSpot));
+
 
 
 
