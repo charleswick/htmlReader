@@ -24,7 +24,7 @@ public class HtmlRead {
             while ( (line = reader.readLine()) != null ) {
                 if(line.contains("href=")){
                     System.out.println("og"+line);
-
+//
                     if (line.contains("https")){
                         beginIndex = line.indexOf("https");
                     }
